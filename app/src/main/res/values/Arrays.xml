@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="ten_eleven">
+        <item>light snow</item>
+        <item>TextView 2</item>
+        <item>TextView 3</item>
+    </array>
+    9
+    <array name="ten_eleven_icon">
+        <item>@dra</item>
+        <item>@drawable/image2</item>
+        <item>@drawable/image3</item>
+    </array>
+
+</resources>
