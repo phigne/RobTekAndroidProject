@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".daybanner">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        tools:context=".MainActivity">
+
+        <ImageView
+            android:id="@+id/dayimage1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="40dp"
+            android:contentDescription="@string/contentdescribtionImage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/divider6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cityName"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <ImageView
+            android:id="@+id/dayimage2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/contentdescribtionImage"
+            app:layout_constraintBottom_toBottomOf="@+id/dayimage1"
+            app:layout_constraintEnd_toStartOf="@+id/divider7"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/divider6"
+            app:layout_constraintTop_toTopOf="@+id/dayimage1"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <ImageView
+            android:id="@+id/dayimage3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/contentdescribtionImage"
+            app:layout_constraintBottom_toBottomOf="@+id/dayimage1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/divider7"
+            app:layout_constraintTop_toTopOf="@+id/dayimage2"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="3dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?android:attr/listDivider"
+            android:foreground="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dayimage2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/dayimage1"
+            app:layout_constraintTop_toBottomOf="@+id/cityName" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="3dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="?android:attr/listDivider"
+            android:foreground="@android:color/darker_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/dayimage3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/dayimage2"
+            app:layout_constraintTop_toBottomOf="@+id/cityName" />
+
+        <TextView
+            android:id="@+id/daytext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tuesday"
+            app:layout_constraintEnd_toEndOf="@+id/dayimage2"
+            app:layout_constraintStart_toStartOf="@+id/dayimage2"
+            app:layout_constraintTop_toBottomOf="@+id/dayimage2"
+            tools:text="@string/tuesday" />
+
+        <TextView
+            android:id="@+id/daytext3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/wednesday"
+            app:layout_constraintEnd_toEndOf="@+id/dayimage3"
+            app:layout_constraintStart_toStartOf="@+id/dayimage3"
+            app:layout_constraintTop_toBottomOf="@+id/dayimage3"
+            tools:text="@string/wednesday" />
+
+        <TextView
+            android:id="@+id/daytext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/monday"
+            app:layout_constraintEnd_toEndOf="@+id/dayimage1"
+            app:layout_constraintStart_toStartOf="@+id/dayimage1"
+            app:layout_constraintTop_toBottomOf="@+id/dayimage1"
+            tools:text="@string/monday" />
+
+        <TextView
+            android:id="@+id/cityName"
+            android:layout_width="402dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/cityPlaceholder"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/cityPlaceholder" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
