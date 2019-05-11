@@ -4,10 +4,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import android.net.Uri;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import java.io.IOException;
+
+import retrofit2.Retrofit;
 import retrofit2.converter.gson.*;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,7 +30,15 @@ import retrofit2.converter.gson.*;
  * Use the {@link daybanner#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class daybanner extends Fragment {
+public class daybanner extends Fragment implements  WeatherListener{
+
+    private Thread WeatherThread;
+    private TextView TextCity;
+    private TextView TextDayOne;
+    private TextView TextDayTwo;
+    private TextView TextDayThree;
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CityName = "CityName";
@@ -46,14 +67,18 @@ public class daybanner extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static daybanner newInstance(String cityname, String country) {
 
-        return newInstance();
+        return newInstance(cityname, country, -1);
     }
+
     public static daybanner newInstance(String cityname, String country, int cityId) {
         daybanner fragment = new daybanner();
         Bundle args = new Bundle();
         args.putString(ARG_CityName, cityname);
         args.putInt(ARG_CityId, cityId);
         args.putString(ARG_Country, country);
+
+        Log.w("HEJ","HEN");
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -66,13 +91,36 @@ public class daybanner extends Fragment {
             mCityId = getArguments().getInt(ARG_CityId);
             mCountry = getArguments().getString(ARG_Country);
         }
+
+        WeatherInfoRetriever Wretriver;
+        if(mCityId == -1 && !mCityName.isEmpty() && !mCountry.isEmpty()) //Country city mode
+            Wretriver =  new WeatherInfoRetriever(mCityName,mCountry);
+        else if(mCityId >= 0 )
+            Wretriver =  new WeatherInfoRetriever(mCityId);
+        else
+            Wretriver = new WeatherInfoRetriever(313);
+
+        Wretriver.listenOnWeatherUpdate(this);
+        WeatherThread = new Thread(Wretriver);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_daybanner, container, false);
+        View v =  inflater.inflate(R.layout.fragment_daybanner, container, false);
+
+        return v;
+    }
+    @Override
+    public void onActivityCreated (Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        TextCity = (TextView)this.getView().findViewById(R.id.cityName);
+        TextCity.setText(mCityName);
+        TextDayOne = (TextView)this.getView().findViewById(R.id.daytext1);
+        TextDayTwo = (TextView)this.getView().findViewById(R.id.daytext2);
+        TextDayThree = (TextView)this.getView().findViewById(R.id.daytext3);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -99,6 +147,11 @@ public class daybanner extends Fragment {
         mListener = null;
     }
 
+    @Override
+    public void OnWeatherChange(WeatherInfo newWeather) {
+
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -114,8 +167,8 @@ public class daybanner extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private void getWeatherData(){
-
+    private void updateWeatherData(){
+        WeatherThread.start();
     }
 }
 
