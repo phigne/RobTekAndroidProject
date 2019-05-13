@@ -12,11 +12,10 @@ public class MainActivity extends AppCompatActivity implements daybanner.OnFragm
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.w("HEJ2222","HEN");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AddFragment("hej", "hej");
+       // AddFragment("hej", "hej");
     }
 
     @Override
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements daybanner.OnFragm
         // Begin Fragment transaction.
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment NewFrag = daybanner.newInstance(city,country);
-        fragmentTransaction.add(R.id.rec, NewFrag);
+        fragmentTransaction.replace(R.id.fragment2, NewFrag);
 
         // Commit the Fragment replace action.
         fragmentTransaction.commit();

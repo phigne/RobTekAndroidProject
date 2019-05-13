@@ -1,10 +1,12 @@
 package Robtek.weatherapplication;
 
 import android.content.res.Resources;
+import android.util.Log;
 
 import java.io.IOException;
 
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -16,6 +18,7 @@ public class WeatherInfoRetriever implements Runnable{
     private WeatherWebService weatherService;
     private Retrofit retrofit;
     private boolean isIdMode;
+    private String API = "26ced23cd65cdb146a6a6e106e6c05d2";
     public WeatherInfo getWeather() {
         return weather;
     }
@@ -57,11 +60,15 @@ public class WeatherInfoRetriever implements Runnable{
     public void run() {
         Call<WeatherInfo> call;
         if(isIdMode)
-            call = weatherService.weather_call_byid(cityId, Resources.getSystem().getString(R.string.API));
+            call = weatherService.weather_call_byid(cityId, API);
         else
-            call = weatherService.weather_call_bycityCountry(cityName,country, Resources.getSystem().getString(R.string.API));
+            call = weatherService.weather_call_bycityCountry(cityName + ","+country, API);
         try {
-            setWeather(call.execute().body());
+            call = weatherService.weather_call_bycityCountry("Copenhagen,DK", API); // cph
+            Response<WeatherInfo> result = call.execute();
+            Log.w("The request: ",call.request().toString());
+            Log.w("Response errorcode: ", Integer.toString(result.code()));
+            setWeather(result.body());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -72,50 +79,3 @@ public class WeatherInfoRetriever implements Runnable{
 interface WeatherListener {
     void OnWeatherChange(WeatherInfo newWeather);
 }
-
-/**
- * Created by slapocolypse on 3/12/18.
- */
-
-class Value {
-    int id;
-    String joke;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getJoke() {
-        return joke;
-    }
-
-    public void setJoke(String joke) {
-        this.joke = joke;
-    }
-}
-
-
-
-class Info {
-    String type;
-    Value value;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Value getValue() {
-        return value;
-    }
-
-    public void setValue(Value value) {
-        this.value = value;
-    }}

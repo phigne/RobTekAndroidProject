@@ -77,7 +77,6 @@ public class daybanner extends Fragment implements  WeatherListener{
         args.putInt(ARG_CityId, cityId);
         args.putString(ARG_Country, country);
 
-        Log.w("HEJ","HEN");
 
         fragment.setArguments(args);
         return fragment;
@@ -103,6 +102,8 @@ public class daybanner extends Fragment implements  WeatherListener{
         Wretriver.listenOnWeatherUpdate(this);
         WeatherThread = new Thread(Wretriver);
 
+        WeatherThread.start();
+
     }
 
     @Override
@@ -117,11 +118,12 @@ public class daybanner extends Fragment implements  WeatherListener{
     public void onActivityCreated (Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         TextCity = (TextView)this.getView().findViewById(R.id.cityName);
-        TextCity.setText(mCityName);
+        TextCity.setText("city");
         TextDayOne = (TextView)this.getView().findViewById(R.id.daytext1);
         TextDayTwo = (TextView)this.getView().findViewById(R.id.daytext2);
         TextDayThree = (TextView)this.getView().findViewById(R.id.daytext3);
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -149,7 +151,7 @@ public class daybanner extends Fragment implements  WeatherListener{
 
     @Override
     public void OnWeatherChange(WeatherInfo newWeather) {
-
+        Log.w("HEHRHEKARJBARKJ",newWeather.getCity().getName());
     }
 
     /**
