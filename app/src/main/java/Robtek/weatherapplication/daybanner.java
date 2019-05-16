@@ -153,6 +153,11 @@ public class daybanner extends Fragment implements  WeatherListener{
     @Override
     public void OnWeatherChange(WeatherInfo newWeather) {
         Log.w("HEHRHEKARJBARKJ",newWeather.getCity().getName());
+        for (List Listobj: newWeather.getCity().getList() ) {
+            for (Weather WeathInterval : Listobj.getWeather()){
+                WeathInterval.getIcon();
+            }
+        }
     }
 
     /**
