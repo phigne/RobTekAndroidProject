@@ -21,6 +21,7 @@ import retrofit2.converter.gson.*;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import android.support.v4.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
