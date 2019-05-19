@@ -1,6 +1,5 @@
 package Robtek.weatherapplication;
 
-import android.content.res.Resources;
 import android.util.Log;
 
 import java.io.IOException;
@@ -54,6 +53,7 @@ public class WeatherInfoRetriever implements Runnable{
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         weatherService = retrofit.create(WeatherWebService.class);
+
     }
 
     @Override
@@ -64,11 +64,11 @@ public class WeatherInfoRetriever implements Runnable{
         else
             call = weatherService.weather_call_bycityCountry(cityName + ","+country, API);
         try {
-            call = weatherService.weather_call_bycityCountry("Copenhagen,DK", API); // cph
             Response<WeatherInfo> result = call.execute();
             Log.w("The request: ",call.request().toString());
             Log.w("Response errorcode: ", Integer.toString(result.code()));
             setWeather(result.body());
+            weather = result.body();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,3 +1,4 @@
+
 package Robtek.weatherapplication;
 
 import com.google.gson.annotations.Expose;

@@ -9,18 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
+
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements cityDataRetrieved {
 
-    private ArrayList<String> byNavne;
-    private ArrayList<String> iconer;
+    private ArrayList<CityDataHandler> CityData;
+
+//    private ArrayList<String> byNavne;
+//    private ArrayList<String> iconer;
     public String save1;
     private String save2;
 
@@ -36,13 +36,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Context context;
 
 
-
-    public MyAdapter(ArrayList<String>  byNavne, ArrayList<String>  iconer, Context context)
+    //Test constructor
+    public MyAdapter(ArrayList<String>  byNavne,  Context context)
     {
-        this.byNavne= byNavne;
-        this.iconer = iconer;
+        CityData = new ArrayList<>();
+        for (String by:byNavne) {
+            CityData.add(new CityDataHandler(by, "dk", context));
+        }
         this.context = context;
     }
+
 
 
 
@@ -50,6 +53,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         public TextView textView1;
         public ImageView imageView;
+        public ImageView imageView2;
+        public ImageView imageView3;
         RecyclerView recycler_view;
         public ConstraintLayout cl;
 
@@ -61,6 +66,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
             textView1 = itemView.findViewById(R.id.my_text_view);
             imageView = itemView.findViewById(R.id.my_image_view);
+            imageView2 = itemView.findViewById(R.id.my_image_view2);
+            imageView3 = itemView.findViewById(R.id.my_image_view3);
             cl = itemView.findViewById(R.id.ConstraintLayout);
             recycler_view = itemView.findViewById(R.id.recycler_view);
 
@@ -77,52 +84,37 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
-
+/*
         Glide.with(view)
                 .load("https://picsum.photos/200/200/?random")
                 .apply(requestOptions)
                 .into(holder.imageView);
-
+*/
 
         return holder;
     }
 
-    public void fillUp()
-    {
-        for(int i = 0; i < 1000; i++)
-        {
-            Random random = new Random();
-            int r = random.nextInt(1000);
-            String result1 = "" + r;
-            byNavne.add(result1);
+    @Override
+    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i){
+        CityDataHandler CurrentCD =         CityData.get(i);
+        CurrentCD.todayImage = ((MyViewHolder) myViewHolder).imageView;
+        CurrentCD.todayPlusOneImage = ((MyViewHolder) myViewHolder).imageView2;
+        CurrentCD.todayPlusTwoImage = ((MyViewHolder) myViewHolder).imageView3;
+        CurrentCD.set_textView1( myViewHolder.textView1);
 
-        }
+        CityData.get(i).getWeather(this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i){
+    public void OncityDataRetrieved(CityDataHandler CityData) {
 
-        myViewHolder.textView1.setText(byNavne.get(i));
-        ImageView imageView = ((MyViewHolder) myViewHolder).imageView;
-        String currentUrl = iconer.get(i);
-
-        Glide.with(context).load(currentUrl)
-                .into(myViewHolder.imageView);
-
-        fillUp();
     }
-
-
 
 
 
     @Override
     public int getItemCount() {
-        return byNavne.size();
+        return CityData.size();
     }
-
-
-
-
 
 }
