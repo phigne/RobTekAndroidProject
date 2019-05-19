@@ -4,24 +4,11 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import java.io.IOException;
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.*;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-import android.support.v4.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -152,7 +139,11 @@ public class daybanner extends Fragment implements  WeatherListener{
 
     @Override
     public void OnWeatherChange(WeatherInfo newWeather) {
-        Log.w("HEHRHEKARJBARKJ",newWeather.getCity().getName());
+        for (List Listobj: newWeather.getList() ) {
+            for (Weather WeathInterval : Listobj.getWeather()){
+                WeathInterval.getIcon();
+            }
+        }
     }
 
     /**
