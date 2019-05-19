@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity{ // implements daybanner.OnF
                 add("Ribe");
                 add("Aalborg");
                 add("Odense");
+                add("Aarhus");
+                add("skagen");
             }
         };
         mAdapter = new MyAdapter(cities,getApplicationContext());
