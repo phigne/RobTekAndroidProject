@@ -55,6 +55,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         public ImageView imageView;
         public ImageView imageView2;
         public ImageView imageView3;
+        private TextView TextDayOne;
+        private TextView TextDayTwo;
+        private TextView TextDayThree;
+        private TextView TextTmp3;
+        private TextView TextTmp1;
+        private TextView TextTmp2;
+
+
         RecyclerView recycler_view;
         public ConstraintLayout cl;
 
@@ -68,6 +76,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             imageView = itemView.findViewById(R.id.my_image_view);
             imageView2 = itemView.findViewById(R.id.my_image_view2);
             imageView3 = itemView.findViewById(R.id.my_image_view3);
+            TextDayOne =  itemView.findViewById(R.id.dayname1);
+            TextDayTwo = itemView.findViewById(R.id.dayname2);
+            TextDayThree = itemView.findViewById(R.id.dayname3);
+            TextTmp1 = itemView.findViewById(R.id.daytmp1);
+            TextTmp2 = itemView.findViewById(R.id.daytmp2);
+            TextTmp3 = itemView.findViewById(R.id.daytmp3);
             cl = itemView.findViewById(R.id.ConstraintLayout);
             recycler_view = itemView.findViewById(R.id.recycler_view);
 
@@ -97,12 +111,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i){
         CityDataHandler CurrentCD =         CityData.get(i);
-        CurrentCD.todayImage = ((MyViewHolder) myViewHolder).imageView;
-        CurrentCD.todayPlusOneImage = ((MyViewHolder) myViewHolder).imageView2;
-        CurrentCD.todayPlusTwoImage = ((MyViewHolder) myViewHolder).imageView3;
+        CurrentCD.addDay(myViewHolder.imageView, myViewHolder.TextDayOne,myViewHolder.TextTmp1);
+        CurrentCD.addDay(myViewHolder.imageView2, myViewHolder.TextDayTwo,myViewHolder.TextTmp2);
+        CurrentCD.addDay(myViewHolder.imageView3, myViewHolder.TextDayThree,myViewHolder.TextTmp3);
         CurrentCD.set_textView1( myViewHolder.textView1);
-
+        /*((MyViewHolder) myViewHolder).cl.setOnClickListener(new   View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getContext(), NotOfInterrest.class);
+                startActivity(intent);
+            }
+        });*/
         CityData.get(i).getWeather(this);
+    }
+
+    private void onClickEvent(){
+
     }
 
     @Override

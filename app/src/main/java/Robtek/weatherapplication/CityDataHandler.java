@@ -7,15 +7,22 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
 public class CityDataHandler implements WeatherListener{
     public String cityName;
     public String country;
     public WeatherInfo Weather;
     private WeatherInfoRetriever Wretriever;
     private Thread WeatherThread;
-    public ImageView todayImage;
-    public ImageView todayPlusOneImage;
-    public ImageView todayPlusTwoImage;
+
+    private ArrayList<ImageView> Images = new ArrayList<>();
+    private ArrayList<TextView> DayNames= new ArrayList<>();
+    private ArrayList<TextView> Daytmps= new ArrayList<>();
+
     private TextView _textView1;
     private Context context;
 
@@ -51,7 +58,18 @@ public class CityDataHandler implements WeatherListener{
         weatherListener = CallbackHandler;
     }
 
-    public void setImageIcon(final Context context, final String  iconId, final ImageView imageview){
+    public void setDay(final Context context, final List WeatherData, final int idx ){
+        if(Images.size() < idx+1 || Daytmps.size() < idx+1 || DayNames.size() < idx+1 )
+            return;
+
+        final ImageView imageV = Images.get(idx);
+        final TextView nameV = DayNames.get(idx);
+        final TextView tmpV = Daytmps.get(idx);
+
+        Locale locale = context.getResources().getConfiguration().locale;
+        Date Time = new Date((long)WeatherData.getDt()*1000);
+        SimpleDateFormat dataform = new SimpleDateFormat("EEEE", locale); // the day of the week spelled out completely
+        final String dayTxt = dataform.format(Time);
 
         //A trick to run the glide on the main thread, since this function is called through a
         //eventhandler on a background thread
@@ -60,46 +78,42 @@ public class CityDataHandler implements WeatherListener{
         Runnable myRunnable = new Runnable() {
             @Override
             public void run() {
-                Glide.with(context).load( "http://openweathermap.org/img/w/" + iconId + ".png")
-                        .into(imageview);
+                Double Kelvin = 273.1500;
+                String icon = WeatherData.getWeather().get(0).getIcon();
+                tmpV.setText(   (Long.toString(Math.round(WeatherData.getMain().getTemp() - Kelvin))  + "°"  ));
+                nameV.setText(dayTxt);
+
+
+                Glide.with(context).load( "http://openweathermap.org/img/w/" + icon + ".png")
+                        .into(imageV);
             } // This is your code
         };
         mainHandler.post(myRunnable);
 
     }
 
-    public void setTodayIcon(){
-        if(Weather != null && todayImage != null){
-            String icon = Weather.getList().get(0).getWeather().get(0).getIcon();
-            setImageIcon(this.context,icon,todayImage);
-        }
-    }
-    public void setTodayPlusOneIcon(){
-        if(Weather != null && todayPlusOneImage != null){
-            //Date date = new Date();
-            //Too simple way to find tommorows weather
-            String icon = Weather.getList().get(8).getWeather().get(0).getIcon();
-            setImageIcon(this.context,icon,todayPlusOneImage);
-        }
-    }
-    public void setTodayPlusTwoIcon(){
-        if(Weather != null && todayPlusTwoImage != null){
-            //Date date = new Date();
-            //Too simple way to find tommorows weather
-            String icon = Weather.getList().get(16).getWeather().get(0).getIcon();
-            setImageIcon(this.context,icon,todayPlusTwoImage);
+    private void setDays(){
+        int i = 0;
+        if(Weather != null){
+            for (ImageView im : Images) {
+                List daydata = Weather.getList().get(i*8); // way too simple way to get tommorws weather - 3hours*8 = 24 hours
+                setDay(this.context,daydata,i);
+                i++;
+            }
         }
     }
 
+
+    public void addDay(ImageView im, TextView daytxt, TextView tmpTxt){
+        Images.add((im)); DayNames.add(daytxt); Daytmps.add(tmpTxt);
+    }
 
     @Override
     public void OnWeatherChange(WeatherInfo newWeather) {
         Weather  = newWeather;
         if(weatherListener != null)
             weatherListener.OncityDataRetrieved(this);
-        setTodayIcon();
-        setTodayPlusOneIcon();
-        setTodayPlusTwoIcon();
+        setDays();
     }
 }
 

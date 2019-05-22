@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,9 @@ public class daybanner extends Fragment implements  WeatherListener{
     private TextView TextDayOne;
     private TextView TextDayTwo;
     private TextView TextDayThree;
+    private TextView TextTmp3;
+    private TextView TextTmp1;
+    private TextView TextTmp2;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -107,9 +109,13 @@ public class daybanner extends Fragment implements  WeatherListener{
         super.onActivityCreated(savedInstanceState);
         TextCity = (TextView)this.getView().findViewById(R.id.cityName);
         TextCity.setText("city");
-        TextDayOne = (TextView)this.getView().findViewById(R.id.daytext1);
-        TextDayTwo = (TextView)this.getView().findViewById(R.id.daytext2);
-        TextDayThree = (TextView)this.getView().findViewById(R.id.daytext3);
+        TextDayOne = (TextView)this.getView().findViewById(R.id.dayname1);
+        TextDayTwo = (TextView)this.getView().findViewById(R.id.dayname2);
+        TextDayThree = (TextView)this.getView().findViewById(R.id.dayname3);
+        TextTmp1 = (TextView)this.getView().findViewById(R.id.daytmp1);
+        TextTmp2 = (TextView)this.getView().findViewById(R.id.daytmp2);
+        TextTmp3 = (TextView)this.getView().findViewById(R.id.daytmp3);
+
     }
 
 
