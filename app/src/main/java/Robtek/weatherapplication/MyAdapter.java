@@ -23,7 +23,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 //    private ArrayList<String> iconer;
     public String save1;
     private String save2;
-
+    private OnCityClicked ParentCallBack;
     public String getSave1()
     {
         return save1;
@@ -37,13 +37,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
 
     //Test constructor
-    public MyAdapter(ArrayList<String>  byNavne,  Context context)
+    public MyAdapter(ArrayList<String>  byNavne,  Context context, OnCityClicked ParentCallBack)
     {
         CityData = new ArrayList<>();
         for (String by:byNavne) {
             CityData.add(new CityDataHandler(by, "dk", context));
         }
         this.context = context;
+        this.ParentCallBack = ParentCallBack;
     }
 
 
@@ -65,7 +66,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
         RecyclerView recycler_view;
         public ConstraintLayout cl;
-
 
 
 
@@ -107,26 +107,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
         return holder;
     }
-
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i){
-        CityDataHandler CurrentCD =         CityData.get(i);
+        CityDataHandler CurrentCD = CityData.get(i);
         CurrentCD.addDay(myViewHolder.imageView, myViewHolder.TextDayOne,myViewHolder.TextTmp1);
         CurrentCD.addDay(myViewHolder.imageView2, myViewHolder.TextDayTwo,myViewHolder.TextTmp2);
         CurrentCD.addDay(myViewHolder.imageView3, myViewHolder.TextDayThree,myViewHolder.TextTmp3);
         CurrentCD.set_textView1( myViewHolder.textView1);
-        /*((MyViewHolder) myViewHolder).cl.setOnClickListener(new   View.OnClickListener(){
+
+        final int idx = i;
+        myViewHolder.cl.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getContext(), NotOfInterrest.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                if(ParentCallBack != null)
+                    ParentCallBack.onCityBannerClicked(CityData.get(idx).Weather, idx);
             }
-        });*/
+        });
         CityData.get(i).getWeather(this);
-    }
-
-    private void onClickEvent(){
-
     }
 
     @Override
@@ -134,7 +131,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     }
 
-
+    public interface OnCityClicked{
+        void onCityBannerClicked(WeatherInfo CityWeatherData, int idx);
+    }
 
     @Override
     public int getItemCount() {

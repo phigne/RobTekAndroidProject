@@ -3,7 +3,9 @@ package Robtek.weatherapplication;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,21 +94,25 @@ public class daybanner extends Fragment implements  WeatherListener{
         Wretriver.listenOnWeatherUpdate(this);
         WeatherThread = new Thread(Wretriver);
 
-        WeatherThread.start();
+       // WeatherThread.start();
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_daybanner, container, false);
+        return inflater.inflate(R.layout.fragment_daybanner, container, false);
 
-        return v;
     }
     @Override
     public void onActivityCreated (Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+
+
+    }
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view,savedInstanceState);
         TextCity = (TextView)this.getView().findViewById(R.id.cityName);
         TextCity.setText("city");
         TextDayOne = (TextView)this.getView().findViewById(R.id.dayname1);
@@ -115,7 +121,7 @@ public class daybanner extends Fragment implements  WeatherListener{
         TextTmp1 = (TextView)this.getView().findViewById(R.id.daytmp1);
         TextTmp2 = (TextView)this.getView().findViewById(R.id.daytmp2);
         TextTmp3 = (TextView)this.getView().findViewById(R.id.daytmp3);
-
+        Log.w("lkjdasjæasjkdalskdj","onViewCreatedonViewCreatedonViewCreatedonViewCreated");
     }
 
 
@@ -143,6 +149,10 @@ public class daybanner extends Fragment implements  WeatherListener{
         mListener = null;
     }
 
+    public void updateCityData(WeatherInfo Weather){
+          TextCity.setText(Weather.getCity().getName());
+    }
+
     @Override
     public void OnWeatherChange(WeatherInfo newWeather) {
         for (List Listobj: newWeather.getList() ) {
@@ -167,8 +177,9 @@ public class daybanner extends Fragment implements  WeatherListener{
         void onFragmentInteraction(Uri uri);
     }
 
+
     private void updateWeatherData(){
-        WeatherThread.start();
+        //WeatherThread.start();
     }
 }
 

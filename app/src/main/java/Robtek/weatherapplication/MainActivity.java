@@ -1,83 +1,56 @@
 package Robtek.weatherapplication;
 
+import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-
-import java.util.ArrayList;
-import java.util.Random;
-
-public class MainActivity extends AppCompatActivity{ // implements daybanner.OnFragmentInteractionListener {
-
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-
-
-
-
-    ArrayList<String> byNavne = new ArrayList<String>();
-
-
-
-    Random random = new Random();
-
-
-
+public class MainActivity extends AppCompatActivity implements CityWeatherList.OnListItemPressed, daybanner.OnFragmentInteractionListener {
+    private CityWeatherList Listfragment; // implements daybanner.OnFragmentInteractionListener {
+    private daybanner DayFragment;
+    private FragmentManager fragMan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
-        for(int i = 0; i < 1000; i++)
-        {
-            int r = random.nextInt(1000);
-            String result1 = "" + r;
-            byNavne.add(result1);
+        fragMan = this.getSupportFragmentManager();
+        DayFragment = DayFragment.newInstance("hej", "hej");
 
-        }
+        Listfragment = (CityWeatherList)fragMan.findFragmentById(R.id.FragmentContainer);
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        ArrayList<String> list = new ArrayList<String>();
-        loadImages(list);
+        FragmentTransaction fragmentTransaction = fragMan.beginTransaction();
 
-        //mAdapter = new MyAdapter(byNavne, list,getApplicationContext());
-        ArrayList<String> cities = new ArrayList<String>(){
-            {
-                add("Copenhagen");
-                add("Ribe");
-                add("Aalborg");
-                add("Odense");
-                add("Aarhus");
-                add("Skagen");
-            }
-        };
-        mAdapter = new MyAdapter(cities,getApplicationContext());
-        recyclerView.setAdapter(mAdapter);
+        // Create FragmentOne instance.
+
+        // Add fragment one with tag name.
+        fragmentTransaction.add(R.id.FragmentContainer, CityWeatherList.newInstance(), "Fragment One");
+        fragmentTransaction.commit();
     }
 
-    public void loadImages(ArrayList<String> list) {
+    @Override
+    public void onCityClicked(WeatherInfo CityWeatherData, int idx) {
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            FragmentTransaction fragTrans = fragMan.beginTransaction();
+            if(DayFragment == null)
+                DayFragment = daybanner.newInstance("hej", "he");
 
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
+            fragTrans.replace(R.id.FragmentContainer, DayFragment);
+            fragTrans.addToBackStack(null);
+            fragTrans.commit();
+            DayFragment.updateCityData(CityWeatherData);
 
-
-
-        for(int i = 0; i < 1000; i++)
-        {
-
-            list.add(i,"https://picsum.photos/200/200?image="+i);
         }
     }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
 
  /*   @Override
     public void onFragmentInteraction(Uri uri) {
