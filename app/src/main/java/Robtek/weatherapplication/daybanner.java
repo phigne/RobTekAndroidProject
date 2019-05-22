@@ -5,11 +5,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,12 +28,17 @@ public class daybanner extends Fragment implements  WeatherListener{
 
     private Thread WeatherThread;
     private TextView TextCity;
-    private TextView TextDayOne;
-    private TextView TextDayTwo;
-    private TextView TextDayThree;
-    private TextView TextTmp3;
-    private TextView TextTmp1;
-    private TextView TextTmp2;
+
+    private ImageView bigImage;
+    private TextView bigTmp;
+
+    private ArrayList<ImageView>  todayImages = new ArrayList<>();
+    private ArrayList<TextView>   todayImNames = new ArrayList<>();
+    private ArrayList<TextView>   todayImTmps = new ArrayList<>();
+
+    private ArrayList<ImageView>  WeekImages = new ArrayList<>();
+    private ArrayList<TextView>  Weeknames = new ArrayList<>();
+    private ArrayList<TextView>  Weektmps = new ArrayList<>();
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -102,8 +112,8 @@ public class daybanner extends Fragment implements  WeatherListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_daybanner, container, false);
-
     }
+
     @Override
     public void onActivityCreated (Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -113,15 +123,41 @@ public class daybanner extends Fragment implements  WeatherListener{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
-        TextCity = (TextView)this.getView().findViewById(R.id.cityName);
-        TextCity.setText("city");
-        TextDayOne = (TextView)this.getView().findViewById(R.id.dayname1);
-        TextDayTwo = (TextView)this.getView().findViewById(R.id.dayname2);
-        TextDayThree = (TextView)this.getView().findViewById(R.id.dayname3);
-        TextTmp1 = (TextView)this.getView().findViewById(R.id.daytmp1);
-        TextTmp2 = (TextView)this.getView().findViewById(R.id.daytmp2);
-        TextTmp3 = (TextView)this.getView().findViewById(R.id.daytmp3);
-        Log.w("lkjdasjæasjkdalskdj","onViewCreatedonViewCreatedonViewCreatedonViewCreated");
+            TextCity = (TextView)this.getView().findViewById(R.id.upperCityName);
+            TextCity.setText("city");
+
+            Weeknames.add ((TextView)this.getView().findViewById(R.id.daytext1));
+            Weeknames.add( (TextView)this.getView().findViewById(R.id.daytext2));
+            Weeknames.add ( (TextView)this.getView().findViewById(R.id.daytext3));
+
+            WeekImages.add( (ImageView) this.getView().findViewById(R.id.dayimage1));
+            WeekImages.add( (ImageView) this.getView().findViewById(R.id.dayimage2));
+            WeekImages.add( (ImageView) this.getView().findViewById(R.id.dayimage3));
+
+            Weektmps.add ( (TextView)this.getView().findViewById(R.id.daytmp1));
+            Weektmps.add ( (TextView)this.getView().findViewById(R.id.daytmp2));
+            Weektmps.add ( (TextView)this.getView().findViewById(R.id.daytmp3));
+
+
+            //Today inits
+            todayImages.add((ImageView)this.getView().findViewById(R.id.todayIm1));
+            todayImages.add((ImageView)this.getView().findViewById(R.id.todayIm));
+            todayImages.add((ImageView)this.getView().findViewById(R.id.todayIm2));
+            todayImages.add((ImageView)this.getView().findViewById(R.id.todayIm3));
+
+            todayImNames.add((TextView)this.getView().findViewById(R.id.todayIm1name));
+            todayImNames.add((TextView)this.getView().findViewById(R.id.todayIm1name2));
+            todayImNames.add((TextView)this.getView().findViewById(R.id.todayIm1name3));
+            todayImNames.add((TextView)this.getView().findViewById(R.id.todayIm1name4));
+
+            todayImTmps.add((TextView)this.getView().findViewById(R.id.todayIm1tmp));
+            todayImTmps.add((TextView)this.getView().findViewById(R.id.todayIm1tmp2));
+            todayImTmps.add((TextView)this.getView().findViewById(R.id.todayIm1tmp3));
+            todayImTmps.add((TextView)this.getView().findViewById(R.id.todayIm1tmp4));
+
+
+            bigImage = (ImageView)this.getView().findViewById((R.id.ImageToday));
+            bigTmp = (TextView)this.getView().findViewById((R.id.todayBigTmp));
     }
 
 
@@ -150,7 +186,79 @@ public class daybanner extends Fragment implements  WeatherListener{
     }
 
     public void updateCityData(WeatherInfo Weather){
-          TextCity.setText(Weather.getCity().getName());
+        if(Weather == null)
+            return;
+        TextCity.setText(Weather.getCity().getName());
+        bigTmp.setText(WeatherHelper.getTempString(Weather.getList().get(0)));
+        Glide.with(Objects.requireNonNull(this.getContext()))
+                .load( WeatherHelper.getIconURL(Weather.getList().get(0).getWeather().get(0).getIcon()))
+                .into(bigImage);
+
+        ArrayList<List> todayWeather = new ArrayList<>();
+        todayWeather.add(Weather.getList().get(1));
+        todayWeather.add(Weather.getList().get(2));
+        todayWeather.add(Weather.getList().get(3));
+        todayWeather.add(Weather.getList().get(4));
+
+        ArrayList<List> WeekWeahter = new ArrayList<>();
+        todayWeather.add(Weather.getList().get(8)); // tommorw
+        todayWeather.add(Weather.getList().get(16)); // +2days
+        todayWeather.add(Weather.getList().get(24));
+
+        updateImTxtTxtTodayList(todayWeather, todayImages,todayImTmps,todayImNames);
+        updateImTxtTxtWeekList(WeekWeahter,WeekImages,Weektmps,Weeknames);
+    }
+
+
+
+    private void updateImTxtTxtTodayList(ArrayList<List> WeatherDataSegments,ArrayList<ImageView> IconImages, ArrayList<TextView>  tempViews, ArrayList<TextView>  nameViews){
+        int i = 0;
+        for (List weatherData: WeatherDataSegments) {
+            if(nameViews.size() < i +1)
+                break;
+
+            nameViews.get(i).setText(WeatherHelper.getTodayHoursFormat(
+                    Objects.requireNonNull(this.getContext()),
+                    weatherData.getDt()
+            ));
+            i++;
+        }
+        updateImTmpList(WeatherDataSegments,IconImages, tempViews );
+
+    }
+    private void updateImTxtTxtWeekList(ArrayList<List> WeatherDataSegments,ArrayList<ImageView> IconImages, ArrayList<TextView>  tempViews, ArrayList<TextView>  nameViews){
+
+        int i = 0;
+        for (List weatherData: WeatherDataSegments) {
+            if(nameViews.size() < i +1)
+                break;
+
+            nameViews.get(i).setText(WeatherHelper.getDayNameFromDT(
+                    Objects.requireNonNull(this.getContext()),
+                    weatherData.getDt()
+            ));
+            i++;
+        }
+        updateImTmpList(WeatherDataSegments,IconImages, tempViews );
+
+    }
+    private void updateImTmpList(ArrayList<List> WeatherDataSegments,ArrayList<ImageView> IconImages, ArrayList<TextView>  tempViews){
+
+        int idx = 0;
+        for (List WeatherData : WeatherDataSegments) {
+            if(IconImages.size() < idx+1 || tempViews.size() < idx+1)
+                break;
+            ImageView imageV = IconImages.get(idx);
+            TextView tmpV = tempViews.get(idx);
+
+            String icon = WeatherData.getWeather().get(0).getIcon();
+            tmpV.setText(WeatherHelper.getTempString(WeatherData));
+
+            Glide.with(Objects.requireNonNull(this.getContext())).load( WeatherHelper.getIconURL(icon))
+                    .into(imageV);
+
+            idx++;
+        }
     }
 
     @Override

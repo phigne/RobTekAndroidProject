@@ -7,10 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class CityDataHandler implements WeatherListener{
     public String cityName;
@@ -65,11 +62,7 @@ public class CityDataHandler implements WeatherListener{
         final ImageView imageV = Images.get(idx);
         final TextView nameV = DayNames.get(idx);
         final TextView tmpV = Daytmps.get(idx);
-
-        Locale locale = context.getResources().getConfiguration().locale;
-        Date Time = new Date((long)WeatherData.getDt()*1000);
-        SimpleDateFormat dataform = new SimpleDateFormat("EEEE", locale); // the day of the week spelled out completely
-        final String dayTxt = dataform.format(Time);
+        final String dayTxt = WeatherHelper.getDayNameFromDT(context, WeatherData.getDt());
 
         //A trick to run the glide on the main thread, since this function is called through a
         //eventhandler on a background thread
@@ -84,7 +77,7 @@ public class CityDataHandler implements WeatherListener{
                 nameV.setText(dayTxt);
 
 
-                Glide.with(context).load( "http://openweathermap.org/img/w/" + icon + ".png")
+                Glide.with(context).load( WeatherHelper.getIconURL(icon))
                         .into(imageV);
             } // This is your code
         };

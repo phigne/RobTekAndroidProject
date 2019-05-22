@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
             fragTrans.replace(R.id.FragmentContainer, DayFragment);
             fragTrans.addToBackStack(null);
             fragTrans.commit();
+            getSupportFragmentManager().executePendingTransactions();
             DayFragment.updateCityData(CityWeatherData);
 
         }
