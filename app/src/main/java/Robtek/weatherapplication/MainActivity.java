@@ -20,8 +20,6 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
         fragMan = this.getSupportFragmentManager();
         DayFragment = DayFragment.newInstance("hej", "hej");
 
-        Listfragment = (CityWeatherList)fragMan.findFragmentById(R.id.FragmentContainer);
-
         FragmentTransaction fragmentTransaction = fragMan.beginTransaction();
 
         // Create FragmentOne instance.

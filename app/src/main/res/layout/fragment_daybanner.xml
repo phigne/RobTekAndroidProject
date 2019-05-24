@@ -150,7 +150,7 @@
                 android:id="@+id/todayBigTmp"
                 android:layout_width="244dp"
                 android:layout_height="125dp"
-                android:layout_marginTop="172dp"
+                android:layout_marginTop="110dp"
                 android:text="17"
                 android:textAlignment="center"
                 android:textSize="100sp"
