@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -24,6 +25,8 @@ import java.util.Objects;
  * Use the {@link daybanner#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+
 public class daybanner extends Fragment implements  WeatherListener{
 
     private Thread WeatherThread;
@@ -93,6 +96,7 @@ public class daybanner extends Fragment implements  WeatherListener{
             mCountry = getArguments().getString(ARG_Country);
         }
 
+        setRetainInstance(true);
         WeatherInfoRetriever Wretriver;
         if(mCityId == -1 && !mCityName.isEmpty() && !mCountry.isEmpty()) //Country city mode
             Wretriver =  new WeatherInfoRetriever(mCityName,mCountry);
@@ -118,7 +122,26 @@ public class daybanner extends Fragment implements  WeatherListener{
     public void onActivityCreated (Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
+        if (savedInstanceState != null) {
+            //Restore the fragment's state here
 
+            //probably orientation change
+            todayImTmps = (ArrayList<TextView>) savedInstanceState.getSerializable("list");
+        } else {
+            if (todayImTmps != null) {
+                //returning from backstack, data is fine, do nothing
+            }
+        }
+
+
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's state here
+
+        outState.putSerializable("list", (Serializable) todayImTmps );
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
@@ -217,7 +240,7 @@ public class daybanner extends Fragment implements  WeatherListener{
             if(nameViews.size() < i +1)
                 break;
 
-            nameViews.get(i).setText(WeatherHelper.getTodayHoursFormat(
+            nameViews.get(i).setText("kl " + WeatherHelper.getTodayHoursFormat(
                     Objects.requireNonNull(this.getContext()),
                     weatherData.getDt()
             ));
@@ -284,6 +307,7 @@ public class daybanner extends Fragment implements  WeatherListener{
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 
 
     private void updateWeatherData(){

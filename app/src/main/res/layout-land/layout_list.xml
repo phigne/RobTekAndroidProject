@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+
+    <ImageView
+        android:id="@+id/my_image_view"
+        android:layout_width="81dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/my_image_view2"
+        android:layout_width="81dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/my_image_view3"
+        app:layout_constraintStart_toEndOf="@+id/my_image_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/my_image_view3"
+        android:layout_width="81dp"
+        android:layout_height="79dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/my_text_view"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#FFA500"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        android:foreground="@android:color/darker_gray"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

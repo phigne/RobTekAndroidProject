@@ -3,6 +3,7 @@ package Robtek.weatherapplication;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -37,6 +40,20 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private MyAdapter mAdapter;
+
+    private Parcelable mListState;
+
+
+    ArrayList<String> cities = new ArrayList<String>(){
+        {
+            add("Copenhagen");
+            add("Ribe");
+            add("Aalborg");
+            add("Odense");
+            add("Aarhus");
+            add("Skagen");
+        }
+    };
 
     public CityWeatherList() {
         // Required empty public constructor
@@ -68,13 +85,21 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        setRetainInstance(true);
+
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        if (savedInstanceState != null) {
+            mListState = savedInstanceState.getParcelable("liste");
+        }
 
         return inflater.inflate(R.layout.fragment_city_weather_list, container, false);
 
@@ -84,22 +109,15 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
         super.onViewCreated(view, savedInstance);
 
 
+
+
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         //mAdapter = new MyAdapter(byNavne, list,getApplicationContext());
-        ArrayList<String> cities = new ArrayList<String>(){
-            {
-                add("Copenhagen");
-                add("Ribe");
-                add("Aalborg");
-                add("Odense");
-                add("Aarhus");
-                add("Skagen");
-            }
-        };
+
         mAdapter = new MyAdapter(cities,this.getContext(), this);
         recyclerView.setAdapter(mAdapter);
     }
@@ -146,4 +164,26 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
         // TODO: Update argument type and name
         void onCityClicked(WeatherInfo CityWeatherData, int idx);
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        // Retrieve list state and list/item positions
+        if(savedInstanceState != null)
+            mListState = savedInstanceState.getParcelable("liste");
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        mListState = layoutManager.onSaveInstanceState();
+        outState.putParcelable("liste", mListState);
+        super.onSaveInstanceState(outState);
+
+
+    }
+
+
+
+
 }
