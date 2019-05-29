@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements CityWeatherList.OnListItemPressed, daybanner.OnFragmentInteractionListener {
     private CityWeatherList Listfragment; // implements daybanner.OnFragmentInteractionListener {
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
         setContentView(R.layout.activity_main);
 
         if(savedInstanceState == null){ // Jos 29/5 11:53
+            Log.i("Jos", "onCreate: savedInstanceState null");
         fragMan = this.getSupportFragmentManager();
         DayFragment = DayFragment.newInstance("hej", "hej");
 
@@ -32,15 +34,17 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
             fragmentTransaction.add(R.id.FragmentContainerRigth, DayFragment, "Fragment Two");
         fragmentTransaction.commit();}
         else{
+            Log.i("Jos", "onCreate: savedInstanceState not null");
             Listfragment = (CityWeatherList)getSupportFragmentManager().findFragmentByTag("weather_infos");// Jos 29/5 11:53
 
             if(DayFragment != null){
-
-                DayFragment = (daybanner)getSupportFragmentManager().findFragmentByTag("hjh");
+                Log.i("Jos", "onCreate: dayfrag not null");
+                DayFragment = (daybanner)getSupportFragmentManager().findFragmentByTag("ARG_weather");
 
             }
             else{
                 DayFragment = DayFragment.newInstance("hej", "hej");
+                Log.i("Jos", "onCreate: dayfrag null");
             }
 
         }

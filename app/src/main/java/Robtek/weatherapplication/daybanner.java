@@ -110,6 +110,7 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
 
         if (savedInstanceState != null) {
             //We use the saved instance in the onViewsCreated to ensure that we have inflated the views before assigning data to them
+            savedInstanceState.getSerializable(ARG_weather);
         } else {
             if (todayImTmps != null) {
                 //returning from backstack, data is fine, do nothing
