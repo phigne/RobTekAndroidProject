@@ -177,7 +177,7 @@
                 android:id="@+id/todayIm1name"
                 android:layout_width="63dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="96dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="14sp"
@@ -189,7 +189,7 @@
                 android:id="@+id/todayIm1name2"
                 android:layout_width="63dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="96dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="14sp"
@@ -201,11 +201,12 @@
                 android:id="@+id/todayIm1name3"
                 android:layout_width="63dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="96dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/todayIm2"
+                app:layout_constraintHorizontal_bias="0.571"
                 app:layout_constraintStart_toStartOf="@+id/todayIm2"
                 app:layout_constraintTop_toTopOf="@+id/todayIm1" />
 
@@ -213,11 +214,12 @@
                 android:id="@+id/todayIm1name4"
                 android:layout_width="63dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="96dp"
                 android:text="TextView"
                 android:textAlignment="center"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/todayIm3"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/todayIm3"
                 app:layout_constraintTop_toTopOf="@+id/todayIm1" />
 
@@ -364,10 +366,13 @@
                 android:id="@+id/daytext3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/wednesday"
                 android:textSize="18sp"
-                tools:layout_editor_absoluteX="273dp"
-                tools:layout_editor_absoluteY="156dp"
+                app:layout_constraintEnd_toEndOf="@+id/dayimage3"
+                app:layout_constraintStart_toEndOf="@+id/divider7"
+                app:layout_constraintTop_toBottomOf="@+id/daytmp3"
                 tools:text="@string/wednesday" />
 
             <TextView
