@@ -3,18 +3,14 @@ package Robtek.weatherapplication;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -30,8 +26,8 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_WEATHER_INFO = "weather_infos";
     private static final String ARG_PARAM2 = "param2";
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -40,8 +36,8 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private MyAdapter mAdapter;
+    private ArrayList<WeatherInfo> RetrievedWeathers;
 
-    private Parcelable mListState;
 
 
     ArrayList<String> cities = new ArrayList<String>(){
@@ -59,16 +55,9 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CityWeatherList.
-     */
+
     // TODO: Rename and change types and number of parameters
-    public static CityWeatherList newInstance(/*String param1, String param2*/) {
+    public static CityWeatherList newInstance(String param1) {
         CityWeatherList fragment = new CityWeatherList();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);
@@ -80,26 +69,20 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+        if ((savedInstanceState != null)&& (savedInstanceState.getSerializable(ARG_WEATHER_INFO) != null)) {
+                RetrievedWeathers = (ArrayList<WeatherInfo>) savedInstanceState.getSerializable(ARG_WEATHER_INFO);
+
         }
-
-        setRetainInstance(true);
-
-
+        //Retain instance will copy and we want to recreate it all
+        //setRetainInstance(true);
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        if (savedInstanceState != null) {
-            mListState = savedInstanceState.getParcelable("liste");
-        }
 
         return inflater.inflate(R.layout.fragment_city_weather_list, container, false);
 
@@ -108,17 +91,17 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     public void onViewCreated(View view, @Nullable Bundle savedInstance){
         super.onViewCreated(view, savedInstance);
 
-
-
-
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
 
         layoutManager = new LinearLayoutManager(this.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        //mAdapter = new MyAdapter(byNavne, list,getApplicationContext());
+        //initialize weather info from saved state
+        if(RetrievedWeathers != null && RetrievedWeathers.size() > 0)
+            mAdapter = new MyAdapter(cities, this.getContext(), this,RetrievedWeathers);
+        else // if no state is retrieved just initialize with the default cities
+            mAdapter = new MyAdapter(cities, this.getContext(), this);
 
-        mAdapter = new MyAdapter(cities,this.getContext(), this);
         recyclerView.setAdapter(mAdapter);
     }
 
@@ -143,10 +126,14 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
         super.onDetach();
         mListener = null;
     }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+    }
 
     @Override
     public void onCityBannerClicked(WeatherInfo CityWeatherData, int idx) {
-        Log.w("ehekajsdkjasdhdasjhdas","aklhsdljahsd,ashd");
         mListener.onCityClicked(CityWeatherData, idx);
     }
 
@@ -169,16 +156,18 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Retrieve list state and list/item positions
-        if(savedInstanceState != null)
-            mListState = savedInstanceState.getParcelable("liste");
     }
 
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        mListState = layoutManager.onSaveInstanceState();
-        outState.putParcelable("liste", mListState);
         super.onSaveInstanceState(outState);
+
+        MyAdapter RecAdapter = (MyAdapter)recyclerView.getAdapter();
+        if( RecAdapter.getCurrentWeatherData() != null)
+           outState.putSerializable("weather_infos", RecAdapter.getCurrentWeatherData());
+       // mListState = layoutManager.onSaveInstanceState();
+       // outState.putParcelable("liste", mListState);
 
 
     }

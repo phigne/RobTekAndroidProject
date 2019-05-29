@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -96,7 +95,6 @@ public class daybanner extends Fragment implements  WeatherListener{
             mCountry = getArguments().getString(ARG_Country);
         }
 
-        setRetainInstance(true);
         WeatherInfoRetriever Wretriver;
         if(mCityId == -1 && !mCityName.isEmpty() && !mCountry.isEmpty()) //Country city mode
             Wretriver =  new WeatherInfoRetriever(mCityName,mCountry);
@@ -141,7 +139,6 @@ public class daybanner extends Fragment implements  WeatherListener{
 
         //Save the fragment's state here
 
-        outState.putSerializable("list", (Serializable) todayImTmps );
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){

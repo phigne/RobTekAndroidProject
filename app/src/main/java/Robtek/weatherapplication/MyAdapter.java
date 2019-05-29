@@ -10,9 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements cityDataRetrieved {
@@ -32,22 +29,50 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     {
         return save2;
     }
+    private ArrayList<WeatherInfo> CurrentWeatherData = new ArrayList<>();
 
     private Context context;
 
 
     //Test constructor
-    public MyAdapter(ArrayList<String>  byNavne,  Context context, OnCityClicked ParentCallBack)
-    {
+    public MyAdapter(ArrayList<String>  byNavne,  Context context, OnCityClicked ParentCallBack) {
         CityData = new ArrayList<>();
-        for (String by:byNavne) {
+        for (String by : byNavne) {
             CityData.add(new CityDataHandler(by, "dk", context));
         }
         this.context = context;
         this.ParentCallBack = ParentCallBack;
     }
+    //Test constructor
+    public MyAdapter( ArrayList<String>  byNavne, Context context, OnCityClicked ParentCallBack, ArrayList<WeatherInfo>  stateWeathers) {
+        CityData = new ArrayList<>();
+        for (String by : byNavne) {
+            CityData.add(new CityDataHandler(by, "dk", context));
+        }
+        int i = 0;
+        //stupid loop to assign the weather data to the correct city.
+        for (WeatherInfo weather : stateWeathers){
+            if(CityData.get(i) != null &&
+                CityData.get(i).cityName == weather.getCity().getName() &&
+                CityData.get(i).country == weather.getCity().getCountry())
+            {
+                CityData.get(i).Weather = weather;
+            }
 
+                i++;
+        }
 
+        this.context = context;
+        this.ParentCallBack = ParentCallBack;
+    }
+
+    public ArrayList<WeatherInfo> getCurrentWeatherData() {
+        return CurrentWeatherData;
+    }
+
+    private void setCurrentWeatherData(ArrayList<WeatherInfo> currentWeatherData) {
+        CurrentWeatherData = currentWeatherData;
+    }
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -94,22 +119,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
 
         ConstraintLayout view = (ConstraintLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_list, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
 
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
-/*
-        Glide.with(view)
-                .load("https://picsum.photos/200/200/?random")
-                .apply(requestOptions)
-                .into(holder.imageView);
-*/
-
-        return holder;
+        return new MyViewHolder(view);
     }
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder myViewHolder, int i){
         CityDataHandler CurrentCD = CityData.get(i);
+        if(CurrentCD.getDaysCount() == 3) //When we scroll we should not reinitialize the data handler
+            return;
         CurrentCD.addDay(myViewHolder.imageView, myViewHolder.TextDayOne,myViewHolder.TextTmp1);
         CurrentCD.addDay(myViewHolder.imageView2, myViewHolder.TextDayTwo,myViewHolder.TextTmp2);
         CurrentCD.addDay(myViewHolder.imageView3, myViewHolder.TextDayThree,myViewHolder.TextTmp3);
@@ -119,16 +136,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         myViewHolder.cl.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if(ParentCallBack != null)
+        if(ParentCallBack != null)
                     ParentCallBack.onCityBannerClicked(CityData.get(idx).Weather, idx);
             }
         });
-        CityData.get(i).getWeather(this);
+        if(CurrentCD.Weather != null){
+            CurrentCD.setCityDataUpdateCallback(this);
+            CurrentCD.updateWeather(CurrentCD.Weather);
+        }
+        else
+            CurrentCD.getWeather(this);
+
     }
 
     @Override
     public void OncityDataRetrieved(CityDataHandler CityData) {
-
+        //Will be called whenever a new Weather info has been retrived from the Web
+        if( !this.getCurrentWeatherData().contains(CityData.Weather))
+            this.getCurrentWeatherData().add(CityData.Weather);
     }
 
     public interface OnCityClicked{

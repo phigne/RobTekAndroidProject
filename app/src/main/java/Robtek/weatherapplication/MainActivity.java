@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements CityWeatherList.OnListItemPressed, daybanner.OnFragmentInteractionListener {
     private CityWeatherList Listfragment; // implements daybanner.OnFragmentInteractionListener {
@@ -22,37 +19,47 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
 
         fragMan = this.getSupportFragmentManager();
         DayFragment = DayFragment.newInstance("hej", "hej");
-            Log.i("Jos", "onCreate: Hallojjjj?");
+
         FragmentTransaction fragmentTransaction = fragMan.beginTransaction();
 
         // Create FragmentOne instance.
-
         // Add fragment one with tag name.
-        fragmentTransaction.add(R.id.FragmentContainer, CityWeatherList.newInstance(), "Fragment One");
-        fragmentTransaction.commit();}
+            fragmentTransaction.add(R.id.FragmentContainer, CityWeatherList.newInstance("22"), "Fragment One");
 
 
+        if(findViewById(R.id.FragmentContainerRigth) != null)
+            fragmentTransaction.add(R.id.FragmentContainerRigth, DayFragment, "Fragment Two");
+        fragmentTransaction.commit();
+    }
 
     @Override
     public void onCityClicked(WeatherInfo CityWeatherData, int idx) {
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        int conf =  getResources().getConfiguration().orientation;
+        if(getResources().getDisplayMetrics().densityDpi <= getResources().getDisplayMetrics().DENSITY_MEDIUM){
+            DayFragment.updateCityData(CityWeatherData);
+        }else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             FragmentTransaction fragTrans = fragMan.beginTransaction();
             if(DayFragment == null)
                 DayFragment = daybanner.newInstance("hej", "he");
-
-
 
             fragTrans.replace(R.id.FragmentContainer, DayFragment);
             fragTrans.addToBackStack(null);
             fragTrans.commit();
             getSupportFragmentManager().executePendingTransactions();
             DayFragment.updateCityData(CityWeatherData);
-
         }
     }
 
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
 
+    }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -65,8 +72,9 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
 
         //Save the fragment's instance
        // getSupportFragmentManager().putFragment(outState, "myFragmentName",Listfragment );
-        getSupportFragmentManager().putFragment(outState,"fragmentInstanceSaved",getSupportFragmentManager().findFragmentById(R.id.FragmentContainer));
+//        getSupportFragmentManager().putFragment(outState,"fragmentInstanceSaved",getSupportFragmentManager().findFragmentById(R.id.FragmentContainerLeft));
     }
+
 
 
 

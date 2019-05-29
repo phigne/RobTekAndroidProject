@@ -19,7 +19,9 @@ public class CityDataHandler implements WeatherListener{
     private ArrayList<ImageView> Images = new ArrayList<>();
     private ArrayList<TextView> DayNames= new ArrayList<>();
     private ArrayList<TextView> Daytmps= new ArrayList<>();
-
+    public int getDaysCount(){
+        return Images.size();
+    }
     private TextView _textView1;
     private Context context;
 
@@ -45,8 +47,18 @@ public class CityDataHandler implements WeatherListener{
         this.context = context;
         Wretriever = new  WeatherInfoRetriever(country, cityName);
         Wretriever.listenOnWeatherUpdate(this);
+    }
 
+    public CityDataHandler(WeatherInfo Weather, Context context){
+        this.cityName = Weather.getCity().getName();
+        this.country = Weather.getCity().getCountry();
+        this.context = context;
+        Wretriever = new  WeatherInfoRetriever(this.country,  this.cityName);
+        Wretriever.listenOnWeatherUpdate(this);
+    }
 
+    public void setCityDataUpdateCallback(cityDataRetrieved CallbackHandler){
+        weatherListener = CallbackHandler;
     }
 
     public void getWeather(cityDataRetrieved CallbackHandler){
@@ -55,10 +67,13 @@ public class CityDataHandler implements WeatherListener{
         weatherListener = CallbackHandler;
     }
 
+    public void updateWeather(WeatherInfo initialWeather){
+        this.OnWeatherChange(initialWeather); // call the callback from the web call to perform same operations
+    }
+
     public void setDay(final Context context, final List WeatherData, final int idx ){
         if(Images.size() < idx+1 || Daytmps.size() < idx+1 || DayNames.size() < idx+1 )
             return;
-
         final ImageView imageV = Images.get(idx);
         final TextView nameV = DayNames.get(idx);
         final TextView tmpV = Daytmps.get(idx);
@@ -82,7 +97,6 @@ public class CityDataHandler implements WeatherListener{
             } // This is your code
         };
         mainHandler.post(myRunnable);
-
     }
 
     private void setDays(){
