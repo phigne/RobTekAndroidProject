@@ -13,32 +13,33 @@
         android:id="@+id/my_image_view"
         android:layout_width="81dp"
         android:layout_height="79dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="296dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/my_image_view2"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/my_image_view2"
         android:layout_width="81dp"
         android:layout_height="79dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="164dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/my_image_view"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/my_image_view3"
         android:layout_width="81dp"
         android:layout_height="79dp"
-        android:layout_marginStart="39dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/my_image_view2"
+        app:layout_constraintStart_toEndOf="@+id/daytmp2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView

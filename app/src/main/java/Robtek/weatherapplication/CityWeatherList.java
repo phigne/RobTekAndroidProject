@@ -69,10 +69,10 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // Bundle bundle = this.getArguments();//Jos 29/5 11:43
         if ((savedInstanceState != null)&& (savedInstanceState.getSerializable(ARG_WEATHER_INFO) != null)) {
-                RetrievedWeathers = (ArrayList<WeatherInfo>) savedInstanceState.getSerializable(ARG_WEATHER_INFO);
-
+                RetrievedWeathers = (ArrayList<WeatherInfo>) savedInstanceState.getSerializable(ARG_WEATHER_INFO); //Andreas
+           // RetrievedWeathers = (ArrayList<WeatherInfo>) bundle.getSerializable(ARG_WEATHER_INFO); //Jos 29/5 11:43
         }
         //Retain instance will copy and we want to recreate it all
         //setRetainInstance(true);
@@ -156,6 +156,8 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Retrieve list state and list/item positions
+        if(savedInstanceState != null){// Jos den 29/5 kl 11:35
+        savedInstanceState.getSerializable("weather_infos");}
     }
 
 

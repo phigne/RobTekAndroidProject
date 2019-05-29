@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if(savedInstanceState == null){ // Jos 29/5 11:53
         fragMan = this.getSupportFragmentManager();
         DayFragment = DayFragment.newInstance("hej", "hej");
 
@@ -29,7 +30,20 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
 
         if(findViewById(R.id.FragmentContainerRigth) != null)
             fragmentTransaction.add(R.id.FragmentContainerRigth, DayFragment, "Fragment Two");
-        fragmentTransaction.commit();
+        fragmentTransaction.commit();}
+        else{
+            Listfragment = (CityWeatherList)getSupportFragmentManager().findFragmentByTag("weather_infos");// Jos 29/5 11:53
+
+            if(DayFragment != null){
+
+                DayFragment = (daybanner)getSupportFragmentManager().findFragmentByTag("hjh");
+
+            }
+            else{
+                DayFragment = DayFragment.newInstance("hej", "hej");
+            }
+
+        }
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ import java.util.Objects;
  */
 
 
-public class daybanner extends Fragment implements  WeatherListener{
+public class daybanner extends Fragment implements  WeatherListener, Serializable {
 
     private Thread WeatherThread;
     private TextView TextCity;
@@ -124,7 +125,17 @@ public class daybanner extends Fragment implements  WeatherListener{
             //Restore the fragment's state here
 
             //probably orientation change
-            todayImTmps = (ArrayList<TextView>) savedInstanceState.getSerializable("list");
+           // todayImTmps = (ArrayList<TextView>) savedInstanceState.getSerializable("dayBanner1");
+           // todayImNames = (ArrayList<TextView>) savedInstanceState.getSerializable("dayBanner2");
+           // todayImages = (ArrayList<ImageView>) savedInstanceState.getSerializable("dayBanner3");
+           // WeekImages = (ArrayList<ImageView>) savedInstanceState.getSerializable("dayBanner4");
+           // Weeknames = (ArrayList<TextView>) savedInstanceState.getSerializable("dayBanner5");
+           // Weektmps = (ArrayList<TextView>) savedInstanceState.getSerializable("dayBanner6");
+            mCityName = (String) savedInstanceState.get("dayBannerCity");
+            mCityId = (int) savedInstanceState.get("dayBannerId");
+            mCountry = (String) savedInstanceState.get("dayBannerCountry");
+
+
         } else {
             if (todayImTmps != null) {
                 //returning from backstack, data is fine, do nothing
@@ -136,7 +147,17 @@ public class daybanner extends Fragment implements  WeatherListener{
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+      //  outState.putSerializable("dayBanner1", todayImTmps );
+      //  outState.putSerializable("dayBanner2", todayImNames);
+      //  outState.putSerializable("dayBanner3", todayImages);
+      //  outState.putSerializable("dayBanner4", WeekImages);
+      //  outState.putSerializable("dayBanner5", Weeknames);
+      //  outState.putSerializable("dayBanner6", Weektmps);
+      //  outState.putString("dayBannerCity", mCityName);
+      //  outState.putInt("dayBannerId", mCityId);
+      //  outState.putString("dayBannerCountry", mCountry);
 
+        outState.putSerializable("hjh",newInstance(mCityName,mCountry,mCityId));
         //Save the fragment's state here
 
     }
