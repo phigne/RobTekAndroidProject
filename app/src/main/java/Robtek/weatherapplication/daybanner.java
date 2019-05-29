@@ -129,6 +129,13 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
+            Weeknames = new ArrayList<>();
+            WeekImages = new ArrayList<>();
+            Weektmps = new ArrayList<>();
+            todayImages = new ArrayList<>();
+            todayImNames = new ArrayList<>();
+            todayImTmps = new ArrayList<>();
+
             TextCity = (TextView)this.getView().findViewById(R.id.upperCityName);
             TextCity.setText("city");
 
@@ -203,7 +210,6 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
         Glide.with(Objects.requireNonNull(this.getContext()))
                 .load( WeatherHelper.getIconURL(Weather.getList().get(0).getWeather().get(0).getIcon()))
                 .into(bigImage);
-
         ArrayList<List> todayWeather = new ArrayList<>();
         todayWeather.add(Weather.getList().get(1));
         todayWeather.add(Weather.getList().get(2));

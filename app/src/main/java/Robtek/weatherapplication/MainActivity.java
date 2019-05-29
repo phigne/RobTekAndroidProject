@@ -88,30 +88,5 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        //Save the fragment's instance
-       // getSupportFragmentManager().putFragment(outState, "myFragmentName",Listfragment );
-//        getSupportFragmentManager().putFragment(outState,"fragmentInstanceSaved",getSupportFragmentManager().findFragmentById(R.id.FragmentContainerLeft));
     }
-
-
-
-
- /*   @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    private void AddFragment(String city, String country){
-        // First get FragmentManager object.
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
-
-        // Begin Fragment transaction.
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment NewFrag = daybanner.newInstance(city,country);
-        fragmentTransaction.replace(R.id.fragment2, NewFrag);
-
-        // Commit the Fragment replace action.
-        fragmentTransaction.commit();
-    }*/
 }
