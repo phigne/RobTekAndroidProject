@@ -4,7 +4,9 @@ package Robtek.weatherapplication;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class WeatherInfo {
+import java.io.Serializable;
+
+public class WeatherInfo implements Serializable {
 
     @SerializedName("cod")
     @Expose

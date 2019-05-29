@@ -29,9 +29,8 @@ import java.util.Objects;
 
 public class daybanner extends Fragment implements  WeatherListener, Serializable {
 
-    private Thread WeatherThread;
     private TextView TextCity;
-
+    private WeatherInfo Weather;
     private ImageView bigImage;
     private TextView bigTmp;
 
@@ -49,6 +48,7 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
     private static final String ARG_CityName = "CityName";
     private static final String ARG_CityId = "CityId";
     private static final String ARG_Country = "Country";
+    private static final String ARG_weather = "weather";
 
     // TODO: Rename and change types of parameters
     private String mCityName;
@@ -95,20 +95,6 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
             mCityId = getArguments().getInt(ARG_CityId);
             mCountry = getArguments().getString(ARG_Country);
         }
-
-        WeatherInfoRetriever Wretriver;
-        if(mCityId == -1 && !mCityName.isEmpty() && !mCountry.isEmpty()) //Country city mode
-            Wretriver =  new WeatherInfoRetriever(mCityName,mCountry);
-        else if(mCityId >= 0 )
-            Wretriver =  new WeatherInfoRetriever(mCityId);
-        else
-            Wretriver = new WeatherInfoRetriever(313);
-
-        Wretriver.listenOnWeatherUpdate(this);
-        WeatherThread = new Thread(Wretriver);
-
-       // WeatherThread.start();
-
     }
 
     @Override
@@ -122,20 +108,7 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
         super.onActivityCreated(savedInstanceState);
 
         if (savedInstanceState != null) {
-            //Restore the fragment's state here
-
-            //probably orientation change
-           // todayImTmps = (ArrayList<TextView>) savedInstanceState.getSerializable("dayBanner1");
-           // todayImNames = (ArrayList<TextView>) savedInstanceState.getSerializable("dayBanner2");
-           // todayImages = (ArrayList<ImageView>) savedInstanceState.getSerializable("dayBanner3");
-           // WeekImages = (ArrayList<ImageView>) savedInstanceState.getSerializable("dayBanner4");
-           // Weeknames = (ArrayList<TextView>) savedInstanceState.getSerializable("dayBanner5");
-           // Weektmps = (ArrayList<TextView>) savedInstanceState.getSerializable("dayBanner6");
-            mCityName = (String) savedInstanceState.get("dayBannerCity");
-            mCityId = (int) savedInstanceState.get("dayBannerId");
-            mCountry = (String) savedInstanceState.get("dayBannerCountry");
-
-
+            //We use the saved instance in the onViewsCreated to ensure that we have inflated the views before assigning data to them
         } else {
             if (todayImTmps != null) {
                 //returning from backstack, data is fine, do nothing
@@ -147,17 +120,8 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-      //  outState.putSerializable("dayBanner1", todayImTmps );
-      //  outState.putSerializable("dayBanner2", todayImNames);
-      //  outState.putSerializable("dayBanner3", todayImages);
-      //  outState.putSerializable("dayBanner4", WeekImages);
-      //  outState.putSerializable("dayBanner5", Weeknames);
-      //  outState.putSerializable("dayBanner6", Weektmps);
-      //  outState.putString("dayBannerCity", mCityName);
-      //  outState.putInt("dayBannerId", mCityId);
-      //  outState.putString("dayBannerCountry", mCountry);
 
-        outState.putSerializable("hjh",newInstance(mCityName,mCountry,mCityId));
+        outState.putSerializable(ARG_weather, Weather);
         //Save the fragment's state here
 
     }
@@ -199,6 +163,11 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
 
             bigImage = (ImageView)this.getView().findViewById((R.id.ImageToday));
             bigTmp = (TextView)this.getView().findViewById((R.id.todayBigTmp));
+
+            if(savedInstanceState != null && savedInstanceState.getSerializable(ARG_weather) != null){
+                WeatherInfo tmp = (WeatherInfo) savedInstanceState.getSerializable(ARG_weather);
+                updateCityData(tmp);
+            }
     }
 
 
@@ -229,6 +198,7 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
     public void updateCityData(WeatherInfo Weather){
         if(Weather == null)
             return;
+        this.Weather = Weather;
         TextCity.setText(Weather.getCity().getName());
         bigTmp.setText(WeatherHelper.getTempString(Weather.getList().get(0)));
         Glide.with(Objects.requireNonNull(this.getContext()))
@@ -304,11 +274,7 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
 
     @Override
     public void OnWeatherChange(WeatherInfo newWeather) {
-        for (List Listobj: newWeather.getList() ) {
-            for (Weather WeathInterval : Listobj.getWeather()){
-                WeathInterval.getIcon();
-            }
-        }
+
     }
 
     /**
@@ -324,12 +290,6 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-
-
-    private void updateWeatherData(){
-        //WeatherThread.start();
     }
 }
 
