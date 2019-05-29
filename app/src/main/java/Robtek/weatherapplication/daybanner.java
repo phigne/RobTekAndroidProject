@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,8 +143,6 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
             Weektmps.add ( (TextView)this.getView().findViewById(R.id.daytmp1));
             Weektmps.add ( (TextView)this.getView().findViewById(R.id.daytmp2));
             Weektmps.add ( (TextView)this.getView().findViewById(R.id.daytmp3));
-
-
             //Today inits
             todayImages.add((ImageView)this.getView().findViewById(R.id.todayIm1));
             todayImages.add((ImageView)this.getView().findViewById(R.id.todayIm));

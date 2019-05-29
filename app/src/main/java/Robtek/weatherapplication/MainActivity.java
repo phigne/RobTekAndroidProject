@@ -17,22 +17,23 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        fragMan = this.getSupportFragmentManager();
         if(savedInstanceState == null){ // Jos 29/5 11:53
             Log.i("Jos", "onCreate: savedInstanceState null");
-        fragMan = this.getSupportFragmentManager();
-        DayFragment = DayFragment.newInstance("hej", "hej");
 
-        FragmentTransaction fragmentTransaction = fragMan.beginTransaction();
+            DayFragment = DayFragment.newInstance("hej", "hej");
 
-        // Create FragmentOne instance.
-        // Add fragment one with tag name.
+            FragmentTransaction fragmentTransaction = fragMan.beginTransaction();
+
+            // Create FragmentOne instance.
+            // Add fragment one with tag name.
             fragmentTransaction.add(R.id.FragmentContainer, CityWeatherList.newInstance("22"), "Fragment One");
 
 
-        if(findViewById(R.id.FragmentContainerRigth) != null)
-            fragmentTransaction.add(R.id.FragmentContainerRigth, DayFragment, "Fragment Two");
-        fragmentTransaction.commit();}
+            if(findViewById(R.id.FragmentContainerRigth) != null)
+                fragmentTransaction.add(R.id.FragmentContainerRigth, DayFragment, "Fragment Two");
+                fragmentTransaction.commit();
+        }
         else{
             Log.i("Jos", "onCreate: savedInstanceState not null");
             Listfragment = (CityWeatherList)getSupportFragmentManager().findFragmentByTag("weather_infos");// Jos 29/5 11:53
