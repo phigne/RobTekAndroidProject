@@ -4,8 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
+
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".daybanner">
@@ -16,18 +18,13 @@
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout2"
-                android:layout_width="720dp"
-                android:layout_height="393dp"
-                android:layout_marginStart="8dp"
+                android:layout_width="342dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintStart_toEndOf="@+id/constraintLayout"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/todayIm2"
@@ -38,7 +35,7 @@
                     android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/todayIm1"
                     app:layout_constraintEnd_toStartOf="@+id/divider8"
-                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/divider5"
                     app:layout_constraintTop_toTopOf="@+id/todayIm1"
                     app:layout_constraintVertical_bias="1.0"
@@ -59,29 +56,15 @@
                     app:layout_constraintVertical_bias="0.0"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
-                <TextView
-                    android:id="@+id/upperCityName"
-                    android:layout_width="366dp"
-                    android:layout_height="56dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="TextView"
-                    android:textAlignment="center"
-                    android:textSize="30sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@tools:sample/cities" />
 
                 <ImageView
                     android:id="@+id/ImageToday"
                     android:layout_width="305dp"
-                    android:layout_height="183dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/upperCityName"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <View
@@ -134,9 +117,10 @@
                     android:layout_width="0dp"
                     android:layout_height="73dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="36dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toStartOf="@+id/divider"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ImageToday"
                     tools:src="@tools:sample/backgrounds/scenic" />
@@ -150,18 +134,20 @@
                     android:layout_marginBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="@+id/todayIm1"
                     app:layout_constraintEnd_toStartOf="@+id/divider5"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toEndOf="@+id/divider"
                     app:layout_constraintTop_toTopOf="@+id/todayIm1"
+                    app:layout_constraintVertical_bias="1.0"
                     tools:src="@tools:sample/backgrounds/scenic" />
 
                 <TextView
                     android:id="@+id/todayBigTmp"
                     android:layout_width="244dp"
-                    android:layout_height="125dp"
-                    android:layout_marginTop="110dp"
+                    android:layout_height="124dp"
+                    android:layout_marginTop="70dp"
                     android:text="17"
                     android:textAlignment="center"
-                    android:textSize="100sp"
+                    android:textSize="90dp"
                     app:layout_constraintEnd_toEndOf="@+id/ImageToday"
                     app:layout_constraintHorizontal_bias="0.509"
                     app:layout_constraintStart_toStartOf="@+id/ImageToday"
@@ -171,11 +157,12 @@
                     android:id="@+id/todayIm1tmp"
                     android:layout_width="63dp"
                     android:layout_height="34dp"
-                    android:layout_marginTop="48dp"
+                    android:layout_marginTop="60dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="@+id/todayIm1"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/todayIm1"
                     app:layout_constraintTop_toTopOf="@+id/todayIm1" />
 
@@ -183,11 +170,12 @@
                     android:id="@+id/todayIm1name"
                     android:layout_width="63dp"
                     android:layout_height="34dp"
-                    android:layout_marginTop="92dp"
+                    android:layout_marginTop="90dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/todayIm1"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/todayIm1"
                     app:layout_constraintTop_toTopOf="@+id/todayIm1" />
 
@@ -195,12 +183,12 @@
                     android:id="@+id/todayIm1name2"
                     android:layout_width="63dp"
                     android:layout_height="34dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="90dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/todayIm"
-                    app:layout_constraintHorizontal_bias="0.494"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/todayIm"
                     app:layout_constraintTop_toTopOf="@+id/todayIm1" />
 
@@ -208,11 +196,12 @@
                     android:id="@+id/todayIm1name3"
                     android:layout_width="63dp"
                     android:layout_height="34dp"
-                    android:layout_marginTop="84dp"
+                    android:layout_marginTop="90dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/todayIm2"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/todayIm2"
                     app:layout_constraintTop_toTopOf="@+id/todayIm1" />
 
@@ -220,12 +209,12 @@
                     android:id="@+id/todayIm1name4"
                     android:layout_width="63dp"
                     android:layout_height="34dp"
-                    android:layout_marginTop="92dp"
+                    android:layout_marginTop="90dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="@+id/todayIm3"
-                    app:layout_constraintHorizontal_bias="0.505"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/todayIm3"
                     app:layout_constraintTop_toTopOf="@+id/todayIm1" />
 
@@ -233,11 +222,12 @@
                     android:id="@+id/todayIm1tmp2"
                     android:layout_width="63dp"
                     android:layout_height="34dp"
-                    android:layout_marginTop="48dp"
+                    android:layout_marginTop="60dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="@+id/todayIm"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/todayIm"
                     app:layout_constraintTop_toTopOf="@+id/todayIm" />
 
@@ -246,12 +236,12 @@
                     android:layout_width="63dp"
                     android:layout_height="36dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="48dp"
+                    android:layout_marginTop="60dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="@+id/todayIm2"
-                    app:layout_constraintHorizontal_bias="0.453"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="@+id/todayIm2"
                     app:layout_constraintTop_toTopOf="@+id/todayIm2" />
 
@@ -260,202 +250,213 @@
                     android:layout_width="63dp"
                     android:layout_height="34dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="48dp"
+                    android:layout_marginTop="60dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="@+id/todayIm3"
-                    app:layout_constraintHorizontal_bias="0.46"
                     app:layout_constraintStart_toStartOf="@+id/todayIm3"
                     app:layout_constraintTop_toTopOf="@+id/todayIm3" />
 
-                <android.support.constraint.ConstraintLayout
-                    android:id="@+id/constraintLayout"
-                    android:layout_width="387dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="140dp"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:context=".MainActivity">
-
-                    <ImageView
-                        android:id="@+id/dayimage1"
-                        android:layout_width="0dp"
-                        android:layout_height="121dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="22dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="40dp"
-                        android:contentDescription="@string/contentdescribtionImage"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/divider6"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cityName"
-                        app:layout_constraintVertical_bias="0.0"
-                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-                    <ImageView
-                        android:id="@+id/dayimage2"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:contentDescription="@string/contentdescribtionImage"
-                        app:layout_constraintBottom_toBottomOf="@+id/dayimage1"
-                        app:layout_constraintEnd_toStartOf="@+id/divider7"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/divider6"
-                        app:layout_constraintTop_toTopOf="@+id/dayimage1"
-                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-                    <ImageView
-                        android:id="@+id/dayimage3"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:contentDescription="@string/contentdescribtionImage"
-                        app:layout_constraintBottom_toBottomOf="@+id/dayimage1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/divider7"
-                        app:layout_constraintTop_toTopOf="@+id/dayimage2"
-                        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-                    <View
-                        android:id="@+id/divider6"
-                        android:layout_width="3dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="?android:attr/listDivider"
-                        android:foreground="@android:color/darker_gray"
-                        app:layout_constraintBottom_toTopOf="@+id/daytext1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.33"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/cityName" />
-
-                    <View
-                        android:id="@+id/divider7"
-                        android:layout_width="3dp"
-                        android:layout_height="0dp"
-                        android:background="?android:attr/listDivider"
-                        android:foreground="@android:color/darker_gray"
-                        app:layout_constraintBottom_toBottomOf="@+id/divider6"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.66"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/divider6" />
-
-                    <TextView
-                        android:id="@+id/daytext2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/tuesday"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="@+id/dayimage2"
-                        app:layout_constraintStart_toStartOf="@+id/dayimage2"
-                        app:layout_constraintTop_toBottomOf="@+id/dayimage2"
-                        tools:text="@string/tuesday" />
-
-                    <TextView
-                        android:id="@+id/daytext3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/wednesday"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="@+id/dayimage3"
-                        app:layout_constraintStart_toEndOf="@+id/dayimage2"
-                        app:layout_constraintTop_toBottomOf="@+id/dayimage3"
-                        tools:text="@string/wednesday" />
-
-                    <TextView
-                        android:id="@+id/daytext1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/monday"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        app:layout_constraintEnd_toEndOf="@+id/dayimage1"
-                        app:layout_constraintStart_toStartOf="@+id/dayimage1"
-                        app:layout_constraintTop_toBottomOf="@+id/dayimage1"
-                        tools:text="@string/monday" />
-
-                    <TextView
-                        android:id="@+id/daytmp1"
-                        android:layout_width="76dp"
-                        android:layout_height="46dp"
-                        android:layout_marginTop="84dp"
-                        android:text="@string/monday"
-                        android:textAlignment="center"
-                        android:textSize="36sp"
-                        app:layout_constraintEnd_toEndOf="@+id/dayimage1"
-                        app:layout_constraintStart_toStartOf="@+id/dayimage1"
-                        app:layout_constraintTop_toTopOf="@+id/dayimage1"
-                        tools:text="@string/monday" />
-
-                    <TextView
-                        android:id="@+id/daytmp2"
-                        android:layout_width="76dp"
-                        android:layout_height="46dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="84dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/monday"
-                        android:textAlignment="center"
-                        android:textSize="36sp"
-                        app:layout_constraintEnd_toStartOf="@+id/divider7"
-                        app:layout_constraintStart_toEndOf="@+id/divider6"
-                        app:layout_constraintTop_toTopOf="@+id/dayimage1"
-                        tools:text="@string/monday" />
-
-                    <TextView
-                        android:id="@+id/daytmp3"
-                        android:layout_width="76dp"
-                        android:layout_height="46dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="84dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/monday"
-                        android:textAlignment="center"
-                        android:textSize="36sp"
-                        app:layout_constraintEnd_toEndOf="@+id/dayimage3"
-                        app:layout_constraintStart_toEndOf="@+id/divider7"
-                        app:layout_constraintTop_toTopOf="@+id/dayimage1"
-                        tools:text="@string/monday" />
-
-                    <TextView
-                        android:id="@+id/cityName"
-                        android:layout_width="402dp"
-                        android:layout_height="5dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/cityPlaceholder"
-                        android:textAlignment="center"
-                        android:textSize="24sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="@string/cityPlaceholder" />
-
-                </android.support.constraint.ConstraintLayout>
-
             </android.support.constraint.ConstraintLayout>
 
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:context=".MainActivity">
+
+                <TextView
+                    android:id="@+id/upperCityName"
+                    android:layout_width="366dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@tools:sample/cities" />
+
+                <ImageView
+                    android:id="@+id/dayimage1"
+                    android:layout_width="0dp"
+                    android:layout_height="121dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="@string/contentdescribtionImage"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/divider6"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cityName"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                <ImageView
+                    android:id="@+id/dayimage2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/contentdescribtionImage"
+                    app:layout_constraintBottom_toBottomOf="@+id/dayimage1"
+                    app:layout_constraintEnd_toStartOf="@+id/divider7"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/divider6"
+                    app:layout_constraintTop_toTopOf="@+id/dayimage1"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                <ImageView
+                    android:id="@+id/dayimage3"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/contentdescribtionImage"
+                    app:layout_constraintBottom_toBottomOf="@+id/dayimage1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/divider7"
+                    app:layout_constraintTop_toTopOf="@+id/dayimage2"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+                <View
+                    android:id="@+id/divider6"
+                    android:layout_width="3dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?android:attr/listDivider"
+                    android:foreground="@android:color/darker_gray"
+                    app:layout_constraintBottom_toTopOf="@+id/daytext1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.33"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cityName" />
+
+                <View
+                    android:id="@+id/divider7"
+                    android:layout_width="3dp"
+                    android:layout_height="0dp"
+                    android:background="?android:attr/listDivider"
+                    android:foreground="@android:color/darker_gray"
+                    app:layout_constraintBottom_toBottomOf="@+id/divider6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.66"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/divider6" />
+
+                <TextView
+                    android:id="@+id/daytext2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/tuesday"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/dayimage2"
+                    app:layout_constraintStart_toStartOf="@+id/dayimage2"
+                    app:layout_constraintTop_toBottomOf="@+id/dayimage2"
+                    tools:text="@string/tuesday" />
+
+                <TextView
+                    android:id="@+id/daytext3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/wednesday"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/dayimage3"
+                    app:layout_constraintStart_toEndOf="@+id/dayimage2"
+                    app:layout_constraintTop_toBottomOf="@+id/dayimage3"
+                    tools:text="@string/wednesday" />
+
+                <TextView
+                    android:id="@+id/daytext1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/monday"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/dayimage1"
+                    app:layout_constraintStart_toStartOf="@+id/dayimage1"
+                    app:layout_constraintTop_toBottomOf="@+id/dayimage1"
+                    tools:text="@string/monday" />
+
+                <TextView
+                    android:id="@+id/daytmp1"
+                    android:layout_width="76dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="84dp"
+                    android:text="@string/monday"
+                    android:textAlignment="center"
+                    android:textSize="36sp"
+                    app:layout_constraintEnd_toEndOf="@+id/dayimage1"
+                    app:layout_constraintStart_toStartOf="@+id/dayimage1"
+                    app:layout_constraintTop_toTopOf="@+id/dayimage1"
+                    tools:text="@string/monday" />
+
+                <TextView
+                    android:id="@+id/daytmp2"
+                    android:layout_width="76dp"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="84dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/monday"
+                    android:textAlignment="center"
+                    android:textSize="36sp"
+                    app:layout_constraintEnd_toStartOf="@+id/divider7"
+                    app:layout_constraintStart_toEndOf="@+id/divider6"
+                    app:layout_constraintTop_toTopOf="@+id/dayimage1"
+                    tools:text="@string/monday" />
+
+                <TextView
+                    android:id="@+id/daytmp3"
+                    android:layout_width="76dp"
+                    android:layout_height="46dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="84dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/monday"
+                    android:textAlignment="center"
+                    android:textSize="36sp"
+                    app:layout_constraintEnd_toEndOf="@+id/dayimage3"
+                    app:layout_constraintStart_toEndOf="@+id/divider7"
+                    app:layout_constraintTop_toTopOf="@+id/dayimage1"
+                    tools:text="@string/monday" />
+
+                <TextView
+                    android:id="@+id/cityName"
+                    android:layout_width="370dp"
+                    android:layout_height="3dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/cityPlaceholder"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/upperCityName"
+                    tools:text="@string/cityPlaceholder" />
+
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
 
     </FrameLayout>
