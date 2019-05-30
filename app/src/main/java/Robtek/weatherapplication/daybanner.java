@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -215,11 +216,10 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
         todayWeather.add(Weather.getList().get(2));
         todayWeather.add(Weather.getList().get(3));
         todayWeather.add(Weather.getList().get(4));
-
         ArrayList<List> WeekWeahter = new ArrayList<>();
-        todayWeather.add(Weather.getList().get(8)); // tommorw
-        todayWeather.add(Weather.getList().get(16)); // +2days
-        todayWeather.add(Weather.getList().get(24));
+        WeekWeahter.add(Weather.getList().get(8)); // tommorw
+        WeekWeahter.add(Weather.getList().get(16)); // +2days
+        WeekWeahter.add(Weather.getList().get(24));
 
         updateImTxtTxtTodayList(todayWeather, todayImages,todayImTmps,todayImNames);
         updateImTxtTxtWeekList(WeekWeahter,WeekImages,Weektmps,Weeknames);
