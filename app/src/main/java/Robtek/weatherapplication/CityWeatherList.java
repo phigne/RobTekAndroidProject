@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Use the {@link CityWeatherList#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked {
+public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked, cityDataRetrieved {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,6 +33,7 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     private String mParam2;
 
     private OnListItemPressed mListener;
+    private cityDataRetrieved WeatherListener;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private MyAdapter mAdapter;
@@ -57,7 +58,7 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
 
 
     // TODO: Rename and change types and number of parameters
-    public static CityWeatherList newInstance(String param1) {
+    public static CityWeatherList newInstance() {
         CityWeatherList fragment = new CityWeatherList();
         Bundle args = new Bundle();
         //args.putString(ARG_PARAM1, param1);
@@ -115,6 +116,8 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
         super.onAttach(context);
         if (context instanceof OnListItemPressed) {
             mListener = (OnListItemPressed) context;
+            if(context instanceof cityDataRetrieved)
+                WeatherListener = (cityDataRetrieved)context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -135,6 +138,12 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     @Override
     public void onCityBannerClicked(WeatherInfo CityWeatherData, int idx) {
         mListener.onCityClicked(CityWeatherData, idx);
+    }
+
+    @Override
+    public void OncityDataRetrieved(CityDataHandler CityData) {
+        if(WeatherListener != null)
+            WeatherListener.OncityDataRetrieved(CityData);
     }
 
     /**

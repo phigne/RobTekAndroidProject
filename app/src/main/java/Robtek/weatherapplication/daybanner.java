@@ -3,6 +3,7 @@ package Robtek.weatherapplication;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -45,9 +46,6 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_CityName = "CityName";
-    private static final String ARG_CityId = "CityId";
-    private static final String ARG_Country = "Country";
     private static final String ARG_weather = "weather";
 
     // TODO: Rename and change types of parameters
@@ -61,26 +59,12 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param cityname Parameter 1.
-     * @param country Parameter 2.
-     * @return A new instance of fragment daybanner.
-     */
     // TODO: Rename and change types and number of parameters
-    public static daybanner newInstance(String cityname, String country) {
 
-        return newInstance(cityname, country, -1);
-    }
-
-    public static daybanner newInstance(String cityname, String country, int cityId) {
+    public static daybanner newInstance() {
         daybanner fragment = new daybanner();
         Bundle args = new Bundle();
-        args.putString(ARG_CityName, cityname);
-        args.putInt(ARG_CityId, cityId);
-        args.putString(ARG_Country, country);
+
 
 
         fragment.setArguments(args);
@@ -90,11 +74,6 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mCityName = getArguments().getString(ARG_CityName);
-            mCityId = getArguments().getInt(ARG_CityId);
-            mCountry = getArguments().getString(ARG_Country);
-        }
     }
 
     @Override
@@ -200,16 +179,29 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
         super.onDetach();
         mListener = null;
     }
+    private void glideIconLoad(final String icon, final ImageView im){
+        final Context tmp = this.getContext();
 
+        Handler mainHandler = new Handler(tmp.getMainLooper());
+
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Glide.with(tmp).load( WeatherHelper.getIconURL(icon))
+                        .into(im);
+            } // This is your code
+        };
+        mainHandler.post(myRunnable);
+    }
     public void updateCityData(WeatherInfo Weather){
         if(Weather == null)
             return;
         this.Weather = Weather;
         TextCity.setText(Weather.getCity().getName());
         bigTmp.setText(WeatherHelper.getTempString(Weather.getList().get(0)));
-        Glide.with(Objects.requireNonNull(this.getContext()))
-                .load( WeatherHelper.getIconURL(Weather.getList().get(0).getWeather().get(0).getIcon()))
-                .into(bigImage);
+
+        glideIconLoad(Weather.getList().get(0).getWeather().get(0).getIcon(),bigImage);
+
         ArrayList<List> todayWeather = new ArrayList<>();
         todayWeather.add(Weather.getList().get(1));
         todayWeather.add(Weather.getList().get(2));
@@ -269,8 +261,7 @@ public class daybanner extends Fragment implements  WeatherListener, Serializabl
             String icon = WeatherData.getWeather().get(0).getIcon();
             tmpV.setText(WeatherHelper.getTempString(WeatherData));
 
-            Glide.with(Objects.requireNonNull(this.getContext())).load( WeatherHelper.getIconURL(icon))
-                    .into(imageV);
+            glideIconLoad(icon,imageV);
 
             idx++;
         }

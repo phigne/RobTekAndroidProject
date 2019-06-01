@@ -16,23 +16,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     private ArrayList<CityDataHandler> CityData;
 
-//    private ArrayList<String> byNavne;
-//    private ArrayList<String> iconer;
-    public String save1;
-    private String save2;
     private OnCityClicked ParentCallBack;
-    public String getSave1()
-    {
-        return save1;
-    }
-    public String getSave2()
-    {
-        return save2;
-    }
+    private cityDataRetrieved WeatherListener;
     private ArrayList<WeatherInfo> CurrentWeatherData = new ArrayList<>();
-
-    private Context context;
-
 
     //Test constructor
     public MyAdapter(ArrayList<String>  byNavne,  Context context, OnCityClicked ParentCallBack) {
@@ -40,8 +26,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         for (String by : byNavne) {
             CityData.add(new CityDataHandler(by, "dk", context));
         }
-        this.context = context;
         this.ParentCallBack = ParentCallBack;
+        if(ParentCallBack instanceof cityDataRetrieved)
+            WeatherListener = (cityDataRetrieved) ParentCallBack;
     }
     //Test constructor
     public MyAdapter( ArrayList<String>  byNavne, Context context, OnCityClicked ParentCallBack, ArrayList<WeatherInfo>  stateWeathers) {
@@ -52,18 +39,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         int i = 0;
         //stupid loop to assign the weather data to the correct city.
         for (WeatherInfo weather : stateWeathers){
-            if(CityData.get(i) != null &&
-                CityData.get(i).cityName == weather.getCity().getName() &&
-                CityData.get(i).country == weather.getCity().getCountry())
-            {
-                CityData.get(i).Weather = weather;
+            for (CityDataHandler CD : CityData) {
+                if(CD != null &&
+                        CD.cityName.equals(weather.getCity().getName()))
+                    CD.Weather = weather;
             }
-
-                i++;
         }
-
-        this.context = context;
         this.ParentCallBack = ParentCallBack;
+        if(ParentCallBack instanceof cityDataRetrieved)
+            WeatherListener = (cityDataRetrieved) ParentCallBack;
     }
 
     public ArrayList<WeatherInfo> getCurrentWeatherData() {
@@ -154,6 +138,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         //Will be called whenever a new Weather info has been retrived from the Web
         if( !this.getCurrentWeatherData().contains(CityData.Weather))
             this.getCurrentWeatherData().add(CityData.Weather);
+        if(WeatherListener != null)
+            WeatherListener.OncityDataRetrieved(CityData);
     }
 
     public interface OnCityClicked{
@@ -176,3 +162,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     }
 
 }
+
