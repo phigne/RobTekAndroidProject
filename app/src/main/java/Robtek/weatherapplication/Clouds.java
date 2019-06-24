@@ -3,8 +3,10 @@ package Robtek.weatherapplication;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 
-public class Clouds {
+
+public class Clouds  implements Serializable {
 
     @SerializedName("all")
     @Expose

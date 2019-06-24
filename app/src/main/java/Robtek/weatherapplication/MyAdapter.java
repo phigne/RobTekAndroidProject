@@ -120,7 +120,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         myViewHolder.cl.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-        if(ParentCallBack != null)
+                if(ParentCallBack != null)
                     ParentCallBack.onCityBannerClicked(CityData.get(idx).Weather, idx);
             }
         });

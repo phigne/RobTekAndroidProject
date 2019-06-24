@@ -6,8 +6,9 @@ import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements CityWeatherList.OnListItemPressed, daybanner.OnFragmentInteractionListener, cityDataRetrieved {
+public class MainActivity extends AppCompatActivity implements CityWeatherList.OnListItemPressed, daybanner.OnFragmentInteractionListener, cityDataRetrieved , View.OnClickListener {
     private CityWeatherList Listfragment; // implements daybanner.OnFragmentInteractionListener {
     private daybanner DayFragment;
     private FragmentManager fragMan;
@@ -52,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override
@@ -77,5 +77,10 @@ public class MainActivity extends AppCompatActivity implements CityWeatherList.O
                 mainHandler.post(myRunnable);
                 IsDayBannerInitialized = true;
             }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

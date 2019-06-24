@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -118,6 +119,7 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
             mListener = (OnListItemPressed) context;
             if(context instanceof cityDataRetrieved)
                 WeatherListener = (cityDataRetrieved)context;
+
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -165,6 +167,7 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         // Retrieve list state and list/item positions
+        // note her kunne man tjekke om dataen er for gammel og sætte staten til null hvis den er.
         if(savedInstanceState != null){// Jos den 29/5 kl 11:35
         savedInstanceState.getSerializable("weather_infos");}
     }
@@ -173,17 +176,12 @@ public class CityWeatherList extends Fragment implements MyAdapter.OnCityClicked
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         MyAdapter RecAdapter = (MyAdapter)recyclerView.getAdapter();
+
+        Serializable info = (Serializable) RecAdapter.getCurrentWeatherData();
         if( RecAdapter.getCurrentWeatherData() != null)
-           outState.putSerializable("weather_infos", RecAdapter.getCurrentWeatherData());
+           outState.putSerializable("weather_infos", info);
        // mListState = layoutManager.onSaveInstanceState();
        // outState.putParcelable("liste", mListState);
-
-
     }
-
-
-
-
 }
